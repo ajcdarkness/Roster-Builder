@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<!--Jacob Cedar and Ayane Naito -->
+<html>
+	<head>
+		<title></title>
+		<link rel = "stylesheet" href = "columns.css" />
+		<link rel = "stylesheet" href = "roster.css" />
+		<style></style>
+		<script src = "utilities.js"></script>
+		<script src = "namedata.js"></script>
+		<script>
+		
+			function initialize()
+			{
+				aCount = 0;
+				bCount = 0;
+				cCount = 0;
+				dCount = 0;
+
+				answer = "";
+
+				newGroup = document.getElementById("newgroup");
+				count = 1;
+				appNum = 0;
+				peopleList = [];
+				buildApplicants();
+				submit = setInterval(limitControl, 1000);
+			}
+			function buildApplicants(){
+				for(i = 0; i < allPeople.length; i++){
+					people = {};
+					peopleData = allPeople[i].split(",");
+					people.gender = peopleData[GENDER];
+					people.name = peopleData[NAME];
+					people.id = count;
+					count++;
+					peopleList.push(people);
+				}
+			}
+			function pushApplicant(){
+				newApplicant = peopleList.shift();
+				applicant = document.createElement("li");
+				applicant.innerHTML = newApplicant.gender + ", " + newApplicant.name + " Entry ID: " + newApplicant.id;
+				applicant.addEventListener("click", moveToGroup);
+				newGroup.appendChild(applicant);
+				
+			}
+			function limitControl(limit){
+				if(appNum < 30){
+					pushApplicant();
+					appNum ++;
+				}else{
+					return;
+				}
+			}
+			
+			function moveToGroup(){
+				answer = prompt("Which Group?");
+				if(answer == "a"){
+					if(aCount == 12){
+						alert("group A is full");
+					}else{
+						document.getElementById("a").appendChild(this);
+						aCount++;
+					}
+				}else if(answer == "b"){
+					if(bCount == 12){
+						alert("group B is full");
+					}else{
+						document.getElementById("b").appendChild(this);
+						bCount++;
+					}
+				}else if(answer == "c"){
+					if(cCount == 12){
+						alert("group C is full");
+					}else{
+						document.getElementById("c").appendChild(this);
+						cCount++;
+					}
+				}else if(answer == "d"){
+					if(dCount == 12){
+						alert("group D is full");
+					}else{
+						document.getElementById("d").appendChild(this);
+						dCount++;
+					}
+				}
+
+				appNum = appNum - 1;
+			}
+
+		</script>
+	</head>
+		
+	<body onload = "initialize();">
+		<span class = "columncontainer">
+			<div class = "column">
+				<ol id = "newgroup"><h1>Prospective Applicants</h1><hr /></ol>
+			</div>
+			<div class = "column">
+				<ol id = "a"><h1>Add to Group A</h1><hr /></ol>
+				<ol id = "b"><h1>Add to Group B</h1><hr /></ol>
+				<ol id = "c"><h1>Add to Group C</h1><hr /></ol>
+				<ol id = "d"><h1>Add to Group D</h1><hr /></ol>
+			</div>
+		</span>
+	</body>
+</html>
